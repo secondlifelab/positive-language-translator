@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>직장인 긍정언어 번역기</title>
 
+<style>
+body {
+    font-family: "Malgun Gothic", sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f4f7fb;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+    color: #2c5282;
+}
+
+textarea {
+    width: 100%;
+    height: 140px;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #3182ce;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2b6cb0;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    background: #edf7ed;
+    border-radius: 10px;
+    min-height: 80px;
+    white-space: pre-wrap;
+}
+
+.copy-btn {
+    background: #38a169;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>😊 직장인 긍정언어 번역기</h1>
+
+<p>부정적이거나 딱딱한 표현을 입력하면 긍정적인 업무 표현으로 바꿔드립니다.</p>
+
+<textarea id="inputText" placeholder="예) 이건 안 됩니다."></textarea>
+
+<button onclick="translateText()">긍정적으로 바꾸기</button>
+
+<div class="result" id="result">
+변환 결과가 여기에 표시됩니다.
+</div>
+
+<button class="copy-btn" onclick="copyResult()">결과 복사</button>
+
+</div>
+
+<script>
+const dictionary = [
+    { negative: "안 됩니다", positive: "다른 방법으로 진행해보겠습니다." },
+    { negative: "못합니다", positive: "가능한 방향을 함께 찾아보겠습니다." },
+    { negative: "그건 어렵습니다", positive: "검토 후 가능한 대안을 제안드리겠습니다." },
+    { negative: "몰라요", positive: "확인 후 안내드리겠습니다." },
+    { negative: "안돼요", positive: "조정 가능한 방법을 찾아보겠습니다." },
+    { negative: "시간이 없습니다", positive: "우선순위를 조정하여 검토해보겠습니다." },
+    { negative: "불가능합니다", positive: "현 상황에서는 제한이 있으나 대안을 찾아보겠습니다." },
+    { negative: "그건 제 업무가 아닙니다", positive: "담당 부서를 확인해 안내드리겠습니다." },
+    { negative: "안됩니다", positive: "다른 방법을 함께 검토해보겠습니다." },
+    { negative: "안돼", positive: "가능한 방향을 찾아보겠습니다." }
+];
+
+function translateText() {
+    let text = document.getElementById("inputText").value.trim();
+
+    if (!text) {
+        document.getElementById("result").innerText = "문장을 입력해주세요.";
+        return;
+    }
+
+    let result = text;
+
+    dictionary.forEach(item => {
+        const regex = new RegExp(item.negative, "g");
+        result = result.replace(regex, item.positive);
+    });
+
+    document.getElementById("result").innerText = result;
+}
+
+function copyResult() {
+    const text = document.getElementById("result").innerText;
+    navigator.clipboard.writeText(text);
+    alert("복사되었습니다.");
+}
+</script>
+
+</body>
+</html>
